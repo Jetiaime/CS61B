@@ -145,8 +145,7 @@ public class Model extends Observable {
                 score += board.tile(col, availableRow).value();
                 --availableRow;
             } else {
-                board.move(col, availableRow - 1, curTile);
-                --availableRow;
+                board.move(col, --availableRow, curTile);
             }
         }
         return changed;
