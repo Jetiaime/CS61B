@@ -124,6 +124,35 @@ public class Model extends Observable {
     }
 
     /**
+     * merge a column and add the score
+     *
+     * @param col: this col will be merged
+     * @return has been changed
+     */
+    public boolean mergeColumn(int col) {
+        boolean changed = false;
+        for (int i = board.size() - 2, availableRow = board.size() - 1; i >= 0; --i) {
+            Tile availableTile = board.tile(col, availableRow);
+            Tile curTile = board.tile(col, i);
+            if (curTile == null) {
+                continue;
+            }
+            changed = true;
+            if (availableTile == null) {
+                board.move(col, availableRow, curTile);
+            } else if (availableTile.value() == curTile.value()) {
+                board.move(col, availableRow, curTile);
+                score += board.tile(col, availableRow).value();
+                --availableRow;
+            } else {
+                board.move(col, availableRow - 1, curTile);
+                --availableRow;
+            }
+        }
+        return changed;
+    }
+
+    /**
      * Tilt the board toward SIDE. Return true iff this changes the board.
      * <p>
      * 1. If two Tile objects are adjacent in the direction of motion and have
@@ -139,11 +168,11 @@ public class Model extends Observable {
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
-
-        // TODO: Modify this.board (and perhaps this.score) to account
-        // for the tilt to the Side SIDE. If the board changed, set the
-        // changed local variable to true.
-
+        board.setViewingPerspective(side);
+        for (int i = 0, n = board.size(); i < n; ++i) {
+            changed |= mergeColumn(i);
+        }
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
