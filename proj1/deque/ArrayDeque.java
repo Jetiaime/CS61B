@@ -148,6 +148,26 @@ public class ArrayDeque<T> implements Iterable<T> {
         return new ArrayIterator();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o instanceof ArrayDeque<?>) {
+            ArrayDeque<T> otherDeque = (ArrayDeque<T>) o;
+            if (otherDeque.size() != size) {
+                return false;
+            }
+            for (int i = 0; i < size; ++i) {
+                if (otherDeque.get(i) != get(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     private class ArrayIterator implements Iterator<T> {
         int index = 0;
 

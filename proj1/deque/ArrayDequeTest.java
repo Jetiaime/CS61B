@@ -118,4 +118,16 @@ public class ArrayDequeTest {
             assertEquals(i, ind++);
         }
     }
+
+    @Test
+    public void equalsTest() {
+        ArrayDeque<Integer> ad1 = new ArrayDeque<>();
+        ArrayDeque<Integer> ad2 = new ArrayDeque<>();
+
+        for (int i = 0; i < 100; ++i) {
+            ad1.addLast(i);
+            ad2.addLast(i);
+            assertTrue(ad1.equals(ad2));
+        }
+    }
 }

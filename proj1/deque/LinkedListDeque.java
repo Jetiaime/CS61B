@@ -111,6 +111,26 @@ public class LinkedListDeque<T> implements Iterable<T> {
         return new LinkedListDequeIterator();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (o instanceof LinkedListDeque<?>) {
+            LinkedListDeque<T> otherDeque = (LinkedListDeque<T>) o;
+            if (otherDeque.size() != size) {
+                return false;
+            }
+            for (int i = 0; i < size; ++i) {
+                if (otherDeque.get(i) != get(i)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
     private class LinkedListDequeIterator implements Iterator<T> {
         private Node<T> cur = head.next;
 
