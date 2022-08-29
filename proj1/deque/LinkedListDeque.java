@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class LinkedListDeque<T> implements Deque<T> {
+public class LinkedListDeque<T> implements Iterable<T> {
     private int size = 0;
     private Node<T> head;
     private Node<T> tail;
@@ -38,7 +38,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return !(0 <= index && index <= size) ? null : getRecursive(index, head.next);
     }
 
-    @Override
+
     public void addFirst(T item) {
         Node<T> cur = new Node<>(item, head, head.next);
         head.next.prev = cur;
@@ -46,7 +46,6 @@ public class LinkedListDeque<T> implements Deque<T> {
         ++size;
     }
 
-    @Override
     public void addLast(T item) {
         Node<T> cur = new Node<>(item, tail.prev, tail);
         tail.prev.next = cur;
@@ -54,24 +53,23 @@ public class LinkedListDeque<T> implements Deque<T> {
         ++size;
     }
 
-    @Override
     public boolean isEmpty() {
         return this.size == 0;
     }
 
-    @Override
+
     public int size() {
         return this.size;
     }
 
-    @Override
+
     public void printDeque() {
         for (Node<T> cur = head.next; cur != tail; cur = cur.next) {
             System.out.print(cur.item + " ");
         }
     }
 
-    @Override
+
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -83,7 +81,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return cur.item;
     }
 
-    @Override
+
     public T removeLast() {
         if (size == 0) {
             return null;
@@ -95,7 +93,7 @@ public class LinkedListDeque<T> implements Deque<T> {
         return cur.item;
     }
 
-    @Override
+
     public T get(int index) {
         if (!(0 <= index && index < size)) {
             return null;
@@ -107,9 +105,26 @@ public class LinkedListDeque<T> implements Deque<T> {
         return cur.item;
     }
 
+
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new LinkedListDequeIterator();
+    }
+
+    private class LinkedListDequeIterator implements Iterator<T> {
+        private Node<T> cur = head.next;
+
+        @Override
+        public boolean hasNext() {
+            return cur != tail;
+        }
+
+        @Override
+        public T next() {
+            T item = cur.item;
+            cur = cur.next;
+            return item;
+        }
     }
 
     private static class Node<T> {

@@ -2,7 +2,7 @@ package deque;
 
 import java.util.Iterator;
 
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Iterable<T> {
 
     private static final int FACTOR = 2;
     private static final double FOLD = 0.25;
@@ -85,7 +85,6 @@ public class ArrayDeque<T> implements Deque<T> {
         }
     }
 
-    @Override
     public void addFirst(T item) {
         checkAndExpand();
         items[head] = item;
@@ -93,7 +92,6 @@ public class ArrayDeque<T> implements Deque<T> {
         ++size;
     }
 
-    @Override
     public void addLast(T item) {
         checkAndExpand();
         items[tail] = item;
@@ -101,24 +99,24 @@ public class ArrayDeque<T> implements Deque<T> {
         ++size;
     }
 
-    @Override
+
     public boolean isEmpty() {
         return size == 0;
     }
 
-    @Override
+
     public int size() {
         return size;
     }
 
-    @Override
+
     public void printDeque() {
         for (int i = backward(head); i < tail; i = backward(i)) {
             System.out.print(items[i] + " ");
         }
     }
 
-    @Override
+
     public T removeFirst() {
         checkAndNarrow();
         if (isEmpty()) {
@@ -129,7 +127,7 @@ public class ArrayDeque<T> implements Deque<T> {
         return items[head];
     }
 
-    @Override
+
     public T removeLast() {
         checkAndNarrow();
         if (isEmpty()) {
@@ -140,13 +138,27 @@ public class ArrayDeque<T> implements Deque<T> {
         return items[tail];
     }
 
-    @Override
+
     public T get(int index) {
         return (!(0 <= index && index < size)) ? null : items[backward((head + index) % items.length)];
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        return new ArrayIterator();
+    }
+
+    private class ArrayIterator implements Iterator<T> {
+        int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        @Override
+        public T next() {
+            return get(index++);
+        }
     }
 }

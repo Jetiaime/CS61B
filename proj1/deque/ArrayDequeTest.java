@@ -105,7 +105,17 @@ public class ArrayDequeTest {
         for (double i = 999999; i > 500000; i--) {
             assertEquals("Should have the same value", i, (double) ad05.removeLast(), 0.0);
         }
+    }
 
-
+    @Test
+    public void iteratorTest() {
+        ArrayDeque<Integer> ad06 = new ArrayDeque<>();
+        for (int i = 0; i < 100; ++i) {
+            ad06.addLast(i);
+        }
+        int ind = 0;
+        for (int i : ad06) {
+            assertEquals(i, ind++);
+        }
     }
 }
