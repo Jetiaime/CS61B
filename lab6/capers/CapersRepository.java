@@ -18,8 +18,8 @@ public class CapersRepository {
     /**
      * Current Working Directory.
      */
-//    static final File CWD = new File(System.getProperty("user.dir"));
-    static final File CWD = new File("/Users/liu/Desktop/Study/CS61B/lab6");
+    static final File CWD = new File(System.getProperty("user.dir"));
+//    static final File CWD = new File("/Users/liu/Desktop/Study/CS61B/lab6");
 
     /**
      * Main metadata folder.
