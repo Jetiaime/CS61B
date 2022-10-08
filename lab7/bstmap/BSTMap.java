@@ -1,4 +1,4 @@
-import bstmap.Map61B;
+package bstmap;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -14,7 +14,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private int size = 0;
 
-    BSTMap() {
+    public BSTMap() {
         root = null;
     }
 
